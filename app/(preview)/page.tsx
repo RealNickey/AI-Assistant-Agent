@@ -11,9 +11,11 @@ import ProjectOverview from "@/components/project-overview";
 import { LoadingIcon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import AudioVisualization from "@/components/audio-visualization";
 
 export default function Chat() {
   const [toolCall, setToolCall] = useState<string>();
+  const [isVoiceActive, setIsVoiceActive] = useState<boolean>(false);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       maxSteps: 4,
@@ -30,6 +32,11 @@ export default function Chat() {
   useEffect(() => {
     if (messages.length > 0) setIsExpanded(true);
   }, [messages]);
+
+  // Simulate voice activity when there's loading or tool calls
+  useEffect(() => {
+    setIsVoiceActive(isLoading || !!toolCall);
+  }, [isLoading, toolCall]);
 
   const currentToolCall = useMemo(() => {
     const tools = messages?.slice(-1)[0]?.toolInvocations;
@@ -63,8 +70,19 @@ export default function Chat() {
   return (
     <div className="flex justify-center items-start sm:pt-16 min-h-screen w-full dark:bg-neutral-900 px-4 md:px-0 py-4">
       <div className="flex flex-col items-center w-full max-w-[500px]">
-      <ProjectOverview />
-      <motion.div
+        <ProjectOverview />
+        
+        {/* Audio Visualization Component */}
+        <div className="mb-6">
+          <AudioVisualization 
+            isActive={isVoiceActive} 
+            size={120} 
+            color="#3b82f6" 
+            className="dark:opacity-80" 
+          />
+        </div>
+
+        <motion.div
           animate={{
             minHeight: isExpanded ? 200 : 0,
             padding: isExpanded ? 12 : 0,
