@@ -33,6 +33,9 @@ export default function NotFound() {
   const [glitchText, setGlitchText] = useState("");
   const [showGlitch, setShowGlitch] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [floatingTextPositions, setFloatingTextPositions] = useState<
+    { left: string; top: string }[]
+  >([]);
 
   useEffect(() => {
     const messageInterval = setInterval(() => {
@@ -40,7 +43,9 @@ export default function NotFound() {
     }, 3000);
 
     const glitchInterval = setInterval(() => {
-      setGlitchText(glitchTexts[Math.floor(Math.random() * glitchTexts.length)]);
+      setGlitchText(
+        glitchTexts[Math.floor(Math.random() * glitchTexts.length)]
+      );
       setShowGlitch(true);
       setTimeout(() => setShowGlitch(false), 200);
     }, 1500);
@@ -58,6 +63,15 @@ export default function NotFound() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    setFloatingTextPositions(
+      Array.from({ length: 6 }, () => ({
+        left: `${Math.random() * 80 + 10}%`,
+        top: `${Math.random() * 80 + 10}%`,
+      }))
+    );
   }, []);
 
   const floatingElements = Array.from({ length: 8 }, (_, i) => (
@@ -85,7 +99,7 @@ export default function NotFound() {
     <div className="min-h-screen bg-gradient-to-br from-deep-dark via-deep-dark/95 to-cool-blue/10 overflow-hidden relative">
       {/* Floating particles */}
       {floatingElements}
-      
+
       {/* Interactive mouse trail */}
       <div
         className="fixed w-96 h-96 bg-cool-blue/5 rounded-full blur-3xl pointer-events-none transition-all duration-1000 ease-out"
@@ -125,7 +139,11 @@ export default function NotFound() {
             >
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="w-16 h-16 bg-gradient-to-br from-cool-blue/20 to-vibrant-yellow/20 rounded-full backdrop-blur-sm border border-white/20"
               />
               <div className="absolute inset-0 rounded-full animate-pulse-glow" />
@@ -214,7 +232,7 @@ export default function NotFound() {
 
         {/* Floating text fragments */}
         <div className="absolute inset-0 pointer-events-none">
-          {[...Array(6)].map((_, i) => (
+          {floatingTextPositions.map((style, i) => (
             <motion.div
               key={i}
               animate={{
@@ -229,10 +247,7 @@ export default function NotFound() {
                 delay: i * 0.8,
               }}
               className="absolute text-xs text-cool-blue/30 font-mono"
-              style={{
-                left: `${Math.random() * 80 + 10}%`,
-                top: `${Math.random() * 80 + 10}%`,
-              }}
+              style={style}
             >
               {glitchTexts[i % glitchTexts.length]}
             </motion.div>
