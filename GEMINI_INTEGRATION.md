@@ -103,6 +103,45 @@ export const defaultModel = "gemini"; // Change to "openai" for OpenAI default
 
 The system prefers Gemini over OpenAI when both are available. This can be customized in the `getBestAvailableProvider()` function.
 
+## Testing
+
+### Available Test Commands
+
+```bash
+# Test Gemini setup without making API calls
+npm run test:gemini-setup
+
+# Test Gemini API with actual requests (requires quota)
+npm run test:gemini
+
+# Test using TypeScript (requires tsx)
+npm run test:gemini-simple
+```
+
+### Test Results
+
+✅ **Setup Validation**: All tests passed!
+- Environment variables: OK
+- API key format: OK  
+- Model initialization: OK
+- Package installation: OK
+
+⚠️ **API Quota**: The API key has exceeded its quota limit. To test actual API calls:
+1. Check your quota at: https://makersuite.google.com/app/apikey
+2. Upgrade your plan if needed
+3. Wait for quota reset if on free tier
+
+### Test Output Example
+
+```
+🔍 Testing Gemini Setup (No API Calls)...
+✅ API key found: AIzaSyCArI...
+✅ API key format looks correct
+✅ Chat model initialized successfully
+✅ Embedding model initialized successfully
+🎉 SETUP VALIDATION PASSED!
+```
+
 ## Benefits
 
 1. **Cost Optimization**: Use Gemini for better cost-effectiveness
