@@ -1,10 +1,13 @@
 import { embed, embedMany } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { getBestAvailableProvider, getEmbeddingModel } from "./providers";
 import { cosineDistance, desc, gt, sql } from "drizzle-orm";
 import { embeddings } from "../db/schema/embeddings";
 import { db } from "../db";
 
-const embeddingModel = openai.embedding("text-embedding-ada-002");
+const getEmbeddingModelForProvider = () => {
+  const provider = getBestAvailableProvider();
+  return getEmbeddingModel(provider);
+};
 
 const generateChunks = (input: string): string[] => {
   return input
@@ -17,6 +20,8 @@ export const generateEmbeddings = async (
   value: string,
 ): Promise<Array<{ embedding: number[]; content: string }>> => {
   const chunks = generateChunks(value);
+  const embeddingModel = getEmbeddingModelForProvider();
+  
   const { embeddings } = await embedMany({
     model: embeddingModel,
     values: chunks,
@@ -26,6 +31,8 @@ export const generateEmbeddings = async (
 
 export const generateEmbedding = async (value: string): Promise<number[]> => {
   const input = value.replaceAll("\n", " ");
+  const embeddingModel = getEmbeddingModelForProvider();
+  
   const { embedding } = await embed({
     model: embeddingModel,
     value: input,

@@ -1,6 +1,6 @@
 import { createResource } from "@/lib/actions/resources";
 import { findRelevantContent } from "@/lib/ai/embedding";
-import { openai } from "@ai-sdk/openai";
+import { getBestAvailableProvider, getChatModel } from "@/lib/ai/providers";
 import { generateObject, streamText, tool } from "ai";
 import { z } from "zod";
 
@@ -8,12 +8,17 @@ import { z } from "zod";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, provider } = await req.json();
+
+  // Use the provider from request or get the best available one
+  const selectedProvider = provider || getBestAvailableProvider();
+  const model = getChatModel(selectedProvider);
 
   const result = streamText({
-    model: openai("gpt-4o"),
+    model,
     messages,
     system: `You are a helpful assistant acting as the users' second brain.
+    You are powered by ${selectedProvider === "gemini" ? "Google's Gemini" : "OpenAI's GPT-4"} AI model.
     Use tools on every request.
     Be sure to getInformation from your knowledge base before answering any questions.
     If the user presents infromation about themselves, use the addResource tool to store it.
@@ -69,7 +74,7 @@ export async function POST(req: Request) {
         }),
         execute: async ({ query }) => {
           const { object } = await generateObject({
-            model: openai("gpt-4o"),
+            model: getChatModel(selectedProvider),
             system:
               "You are a query understanding assistant. Analyze the user query and generate similar questions.",
             schema: z.object({

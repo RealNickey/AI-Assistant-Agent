@@ -11,12 +11,18 @@ import ProjectOverview from "@/components/project-overview";
 import { LoadingIcon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import ProviderSelector from "@/components/provider-selector";
 
 export default function Chat() {
   const [toolCall, setToolCall] = useState<string>();
+  const [selectedProvider, setSelectedProvider] = useState<"openai" | "gemini">("gemini");
+  
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       maxSteps: 4,
+      body: {
+        provider: selectedProvider,
+      },
       onToolCall({ toolCall }) {
         setToolCall(toolCall.toolName);
       },
@@ -64,6 +70,15 @@ export default function Chat() {
     <div className="flex justify-center items-start sm:pt-16 min-h-screen w-full dark:bg-neutral-900 px-4 md:px-0 py-4">
       <div className="flex flex-col items-center w-full max-w-[500px]">
       <ProjectOverview />
+      
+      {/* Provider Selector */}
+      <div className="mb-4 w-full flex justify-center">
+        <ProviderSelector 
+          selectedProvider={selectedProvider} 
+          onProviderChange={setSelectedProvider}
+        />
+      </div>
+
       <motion.div
           animate={{
             minHeight: isExpanded ? 200 : 0,
