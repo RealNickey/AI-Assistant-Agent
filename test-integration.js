@@ -192,7 +192,7 @@ async function runTests() {
     generateReport();
     
   } catch (error) {
-    console.error("\n� Test runner error:", error.message);
+    console.error("\n❌ Test runner error:", error.message);
   }
 }
 
