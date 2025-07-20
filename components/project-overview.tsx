@@ -16,36 +16,31 @@ const ProjectOverview = () => {
           <VercelIcon size={16} />
           <span>+</span>
           <InformationIcon />
+          <span>+</span>
+          <span className="text-blue-500 font-semibold">Multi-AI</span>
         </p>
         <p>
-          The{" "}
+          Enhanced AI assistant with <strong>multi-provider support</strong> - seamlessly switch between{" "}
+          <span className="text-blue-600 font-medium">OpenAI GPT-4</span> and{" "}
+          <span className="text-green-600 font-medium">Google Gemini</span> with intelligent fallback and provider selection.
+        </p>
+        <p>
+          Features <strong>Retrieval Augmented Generation (RAG)</strong> with vector embeddings, smart provider routing, and enhanced error handling for optimal performance and reliability.
+        </p>
+        <p>
+          Built with{" "}
           <Link
             href="https://sdk.vercel.ai/docs/reference/ai-sdk-ui/use-chat"
             className="text-blue-500"
           >
-            useChat
-          </Link>{" "}
-          hook along with the{" "}
+            AI SDK
+          </Link>,{" "}
           <Link
             href="https://sdk.vercel.ai/docs/reference/ai-sdk-core/stream-text"
             className="text-blue-500"
           >
             streamText
-          </Link>{" "}
-          function allows you to build applications with retrieval augmented
-          generation (RAG) capabilities. Data is stored as vector embeddings
-          using DrizzleORM and PostgreSQL.
-        </p>
-        <p>
-          Learn how to build this project by following this{" "}
-          <Link
-            className="text-blue-500"
-            href="https://sdk.vercel.ai/docs/guides/rag-chatbot"
-            target="_blank"
-          >
-            guide
-          </Link>
-          .
+          </Link>, DrizzleORM, and PostgreSQL with advanced provider management.
         </p>
       </div>
     </motion.div>

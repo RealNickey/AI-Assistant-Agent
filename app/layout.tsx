@@ -7,6 +7,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import BrowserExtensionHandler from "@/components/browser-extension-handler";
 
 export const metadata: Metadata = {
   title: "AI Assistant Agent",
@@ -23,8 +24,9 @@ export default function RootLayout({
   // If Clerk keys are not provided, render without authentication
   if (!clerkPublishableKey) {
     return (
-      <html lang="en">
-        <body>
+      <html lang="en" suppressHydrationWarning>
+        <body suppressHydrationWarning>
+          <BrowserExtensionHandler />
           <header style={{ padding: "16px", borderBottom: "1px solid #e0e0e0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h1 style={{ margin: 0, fontSize: "20px" }}>AI Assistant Agent</h1>
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
@@ -39,8 +41,9 @@ export default function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body>
+      <html lang="en" suppressHydrationWarning>
+        <body suppressHydrationWarning>
+          <BrowserExtensionHandler />
           <header style={{ padding: "16px", borderBottom: "1px solid #e0e0e0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h1 style={{ margin: 0, fontSize: "20px" }}>AI Assistant Agent</h1>
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
