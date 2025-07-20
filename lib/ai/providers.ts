@@ -29,7 +29,7 @@ export interface ProviderConfig {
 // Provider cache to prevent repeated initialization
 let providerCache: ProviderConfig | null = null;
 let lastInitTime = 0;
-const CACHE_TTL = 300000; // 5 minutes in milliseconds
+const CACHE_TTL = env.CACHE_TTL_MS ? parseInt(env.CACHE_TTL_MS, 10) : 300000; // 5 minutes in milliseconds
 
 /**
  * Safely initialize AI providers with proper error handling and availability checks
