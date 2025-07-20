@@ -60,10 +60,11 @@ async function testOpenAI() {
     
     // Test embedding
     console.log(`${colors.cyan}Testing embedding...${colors.reset}`);
-    const embeddingModel = openai.embedding("text-embedding-ada-002");
-    const { embedding } = await embeddingModel.embed({
-      value: "This is a test embedding"
+    const embeddingResponse = await openai.Embedding.create({
+      model: "text-embedding-ada-002",
+      input: "This is a test embedding"
     });
+    const embedding = embeddingResponse.data[0].embedding;
     
     console.log(`${colors.green}✅ OpenAI Embedding generated with length: ${embedding.length}${colors.reset}`);
     
