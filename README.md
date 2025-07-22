@@ -31,7 +31,7 @@ To get the project up and running, follow these steps:
 
    ```
    OPENAI_API_KEY=your_api_key_here
-   DATABASE_URL=your_postgres_connection_string_here
+   POSTGRES_URL=your_postgres_connection_string_here
    ```
 
 4. Migrate the database schema:
