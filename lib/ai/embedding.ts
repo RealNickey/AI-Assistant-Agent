@@ -1,10 +1,11 @@
 import { embed, embedMany } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { cosineDistance, desc, gt, sql } from "drizzle-orm";
 import { embeddings } from "../db/schema/embeddings";
 import { db } from "../db";
 
-const embeddingModel = openai.embedding("text-embedding-ada-002");
+const google = createGoogleGenerativeAI();
+const embeddingModel = google.embedding("text-embedding-004");
 
 const generateChunks = (input: string): string[] => {
   return input
