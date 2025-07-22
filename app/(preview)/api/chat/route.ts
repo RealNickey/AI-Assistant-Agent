@@ -1,8 +1,10 @@
 import { createResource } from "@/lib/actions/resources";
 import { findRelevantContent } from "@/lib/ai/embedding";
-import { openai } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject, streamText, tool } from "ai";
 import { z } from "zod";
+
+const google = createGoogleGenerativeAI();
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -11,7 +13,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: openai("gpt-4o"),
+    model: google("gemini-2.5-flash"),
     messages,
     system: `You are a helpful assistant acting as the users' second brain.
     Use tools on every request.
@@ -69,7 +71,7 @@ export async function POST(req: Request) {
         }),
         execute: async ({ query }) => {
           const { object } = await generateObject({
-            model: openai("gpt-4o"),
+            model: google("gemini-2.5-flash"),
             system:
               "You are a query understanding assistant. Analyze the user query and generate similar questions.",
             schema: z.object({

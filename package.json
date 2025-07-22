@@ -16,6 +16,7 @@
     "db:check": "drizzle-kit check"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
     "@ai-sdk/openai": "^1.0.8",
     "@ai-sdk/provider-utils": "^2.2.8",
     "@clerk/nextjs": "^6.25.0",
