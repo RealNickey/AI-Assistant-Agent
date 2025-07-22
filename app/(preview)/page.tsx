@@ -11,6 +11,7 @@ import ProjectOverview from "@/components/project-overview";
 import { LoadingIcon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import RadialVortexButton from "@/components/radial-vortex-button";
 
 export default function Chat() {
   const [toolCall, setToolCall] = useState<string>();
@@ -61,10 +62,17 @@ export default function Chat() {
     .slice(-1)[0];
 
   return (
-    <div className="flex justify-center items-start sm:pt-16 min-h-screen w-full dark:bg-neutral-900 px-4 md:px-0 py-4">
-      <div className="flex flex-col items-center w-full max-w-[500px]">
-      <ProjectOverview />
-      <motion.div
+    <div className="relative min-h-screen w-full">/*wtf?
+      {/* Vortex Background */}
+      <div className="absolute inset-0">
+        <RadialVortexButton />
+      </div>
+      
+      {/* Chat Interface */}
+      <div className="relative z-10 flex justify-center items-start sm:pt-16 min-h-screen w-full px-4 md:px-0 py-4">
+        <div className="flex flex-col items-center w-full max-w-[500px]">
+        <ProjectOverview />
+        <motion.div
           animate={{
             minHeight: isExpanded ? 200 : 0,
             padding: isExpanded ? 12 : 0,
@@ -117,6 +125,7 @@ export default function Chat() {
             </motion.div>
           </div>
         </motion.div>
+        </div>
       </div>
     </div>
   );
