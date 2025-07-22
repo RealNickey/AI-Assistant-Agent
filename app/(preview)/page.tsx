@@ -62,7 +62,7 @@ export default function Chat() {
     .slice(-1)[0];
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative min-h-screen w-full">/*wtf?
       {/* Vortex Background */}
       <div className="absolute inset-0">
         <RadialVortexButton />
