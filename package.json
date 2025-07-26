@@ -59,7 +59,7 @@
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "dotenv": "^16.4.7",
-    "drizzle-kit": "^0.30.0",
+    "drizzle-kit": "^0.31.4",
     "eslint": "^9.16.0",
     "eslint-config-next": "^15.4.1",
     "jest": "^30.0.5",
